@@ -1,0 +1,141 @@
+import { useState } from 'react';
+
+export default function App() {
+    const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+
+    // Coordinate points for icon placement
+    const coordinatePoints = [
+        [230, 529],
+        [390, 370],
+        [626, 242],
+        [847, 178],
+        [1114, 242],
+        [1312, 357],
+        [1440, 529]
+    ];
+
+    // Array of icon elements
+    const iconElements = [
+        { icon: "Ai", color: "bg-orange-100 text-orange-600", type: "text" },
+        { icon: "⚡", color: "bg-pink-500 text-white", type: "emoji" },
+        { icon: "🎯", color: "bg-red-500 text-white", type: "emoji" },
+        { icon: "△", color: "bg-black text-white", type: "triangle" },
+        { icon: "R", color: "bg-white text-gray-800", type: "text" },
+        { icon: "Ps", color: "bg-blue-100 text-blue-600", type: "text" },
+        { icon: "●●●●", color: "bg-black text-red-400", type: "dots" }
+    ];
+
+    // Calculate scale based on distance from hovered icon
+    const getIconScale = (currentIndex: number) => {
+        if (hoveredIndex === null) return 1;
+
+        const distance = Math.abs(currentIndex - hoveredIndex);
+        if (distance === 0) return 1.4; // Hovered icon gets largest scale
+        if (distance === 1) return 0.9; // Adjacent icons get smaller
+        if (distance === 2) return 0.8; // Further icons get even smaller
+        return 0.7; // Distant icons get smallest scale
+    };
+
+    // Calculate icon size based on scale
+    const getIconSize = (currentIndex: number) => {
+        const scale = getIconScale(currentIndex);
+        const baseSize = 128;
+        return baseSize * scale;
+    };
+
+    // Calculate text size based on scale
+    const getTextSize = (currentIndex: number) => {
+        const scale = getIconScale(currentIndex);
+        if (scale >= 1.4) return 'text-4xl';
+        if (scale >= 1.2) return 'text-3xl';
+        if (scale >= 1.0) return 'text-3xl';
+        if (scale >= 0.9) return 'text-2xl';
+        return 'text-xl';
+    };
+
+    return (
+        <div className="overflow-hidden">
+            <div className="relative w-full h-full" style={{ minWidth: '1600px', minHeight: '700px' }}>
+
+                {/* Icons positioned at specified coordinates */}
+                {coordinatePoints.map((point, index) => {
+                    const [x, y] = point;
+                    const element = iconElements[index % iconElements.length];
+                    const scale = getIconScale(index);
+                    const iconSize = getIconSize(index);
+                    const textSize = getTextSize(index);
+
+                    return (
+                        <div
+                            key={index}
+                            className={`absolute ${element.color} 
+                         flex items-center justify-center shadow-lg
+                         transform transition-all duration-300 ease-out
+                         animate-pulse rounded-2xl cursor-pointer`}
+                            style={{
+                                left: `${x - iconSize / 2}px`, // Center the icon by offsetting half width
+                                top: `${y - iconSize / 2}px`,  // Center the icon by offsetting half height
+                                width: `${iconSize}px`,
+                                height: `${iconSize}px`,
+                                animationDelay: `${index * 0.3}s`,
+                                transform: `scale(${scale})`,
+                                zIndex: hoveredIndex === index ? 20 : 10
+                            }}
+                            onMouseEnter={() => setHoveredIndex(index)}
+                            onMouseLeave={() => setHoveredIndex(null)}
+                        >
+                            {element.type === 'triangle' ? (
+                                <div
+                                    className="border-l-transparent border-r-transparent border-b-white"
+                                    style={{
+                                        width: 0,
+                                        height: 0,
+                                        borderLeftWidth: `${12 * scale}px`,
+                                        borderRightWidth: `${12 * scale}px`,
+                                        borderBottomWidth: `${18 * scale}px`
+                                    }}
+                                >
+                                </div>
+                            ) : element.type === 'dots' ? (
+                                <div className="grid grid-cols-2 gap-1" style={{ gap: `${4 * scale}px` }}>
+                                    <div
+                                        className="bg-red-400 rounded-full"
+                                        style={{
+                                            width: `${8 * scale}px`,
+                                            height: `${8 * scale}px`
+                                        }}
+                                    ></div>
+                                    <div
+                                        className="bg-orange-400 rounded-full"
+                                        style={{
+                                            width: `${8 * scale}px`,
+                                            height: `${8 * scale}px`
+                                        }}
+                                    ></div>
+                                    <div
+                                        className="bg-yellow-400 rounded-full"
+                                        style={{
+                                            width: `${8 * scale}px`,
+                                            height: `${8 * scale}px`
+                                        }}
+                                    ></div>
+                                    <div
+                                        className="bg-green-400 rounded-full"
+                                        style={{
+                                            width: `${8 * scale}px`,
+                                            height: `${8 * scale}px`
+                                        }}
+                                    ></div>
+                                </div>
+                            ) : (
+                                <span className={`font-bold ${textSize}`}>
+                  {element.icon}
+                </span>
+                            )}
+                        </div>
+                    );
+                })}
+            </div>
+        </div>
+    );
+}

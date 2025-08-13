@@ -1,0 +1,16 @@
+import { useRive } from '@rive-app/react-canvas';
+
+export default function Worm() {
+    const { rive, RiveComponent } = useRive({
+        src: '/worm.riv',
+        stateMachines: "State Machine 1",
+        autoplay: true,
+    });
+
+    return (
+        <RiveComponent
+            onMouseEnter={() => rive && rive.play()}
+            onMouseLeave={() => rive && rive.pause()}
+        />
+    );
+}

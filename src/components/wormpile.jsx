@@ -1,0 +1,133 @@
+import React from 'react'
+import * as THREE from 'three'
+import { useGLTF, PerspectiveCamera } from '@react-three/drei'
+
+export function Wormpile(props) {
+
+    const { nodes, materials } = useGLTF('/models/wormpile.glb')
+
+    //construct glass material
+    const glassMaterial = new THREE.MeshPhysicalMaterial({
+        roughness: 0,
+        transmission: 1,
+        thickness: .01,
+        ior: 1.2,
+    })
+
+    return (
+        <group {...props} dispose={null}>
+                <mesh
+                    castShadow
+                    receiveShadow
+                    geometry={nodes.Cube001.geometry}
+                    material={materials.Material}
+                />
+                <mesh
+                    geometry={nodes.Cube001_1.geometry}
+                    material={materials['Material.002']}
+                />
+                <mesh
+                    geometry={nodes.Cube001_2.geometry}
+                    material={glassMaterial}
+                />
+                <mesh
+                    geometry={nodes.Cube001_3.geometry}
+                    material={materials['Material.003']}
+                />
+                <mesh
+                    castShadow
+                    receiveShadow
+                    geometry={nodes.Cube001_4.geometry}
+                    material={materials['purple worm']}
+                />
+                <mesh
+                    castShadow
+                    receiveShadow
+                    geometry={nodes.Cube001_5.geometry}
+                    material={materials.yellow_worm}
+                />
+                <mesh
+                    castShadow
+                    receiveShadow
+                    geometry={nodes.Cube001_6.geometry}
+                    material={materials['red worm.001']}
+                />
+                <mesh
+                    geometry={nodes.Cube001_7.geometry}
+                    material={materials['Material.006']}
+                />
+                <mesh
+                    geometry={nodes.Cube001_8.geometry}
+                    material={glassMaterial}
+                />
+                <mesh
+                    geometry={nodes.Cube001_9.geometry}
+                    material={materials['Material.007']}
+                />
+                <mesh
+                    geometry={nodes.Cube001_10.geometry}
+                    material={materials['Material.008']}
+                />
+                <mesh
+                    geometry={nodes.Cube001_11.geometry}
+                    material={glassMaterial}
+                />
+                <mesh
+                    geometry={nodes.Cube001_12.geometry}
+                    material={materials['Material.009']}
+                />
+                <mesh
+                    geometry={nodes.Cube001_13.geometry}
+                    material={materials['Material.010']}
+                />
+                <mesh
+                    geometry={nodes.Cube001_14.geometry}
+                    material={glassMaterial}
+                />
+                <mesh
+                    geometry={nodes.Cube001_15.geometry}
+                    material={materials['Material.011']}
+                />
+                <mesh
+                    geometry={nodes.Cube001_16.geometry}
+                    material={materials['Material.012']}
+                />
+                <mesh
+                    geometry={nodes.Cube001_17.geometry}
+                    material={glassMaterial}
+                />
+                <mesh
+                    geometry={nodes.Cube001_18.geometry}
+                    material={materials['Material.013']}
+                />
+                <mesh
+                    geometry={nodes.Cube001_19.geometry}
+                    material={materials['Material.014']}
+                />
+                <mesh
+                    geometry={nodes.Cube001_20.geometry}
+                    material={glassMaterial}
+                />
+                <mesh
+                    geometry={nodes.Cube001_21.geometry}
+                    material={materials['Material.015']}
+                />
+                <mesh
+                    geometry={nodes.Cube001_22.geometry}
+                    material={materials['Material.025']}
+                />
+                <mesh
+                    geometry={nodes.Cube001_23.geometry}
+                    material={glassMaterial}
+                />
+                <mesh
+                    geometry={nodes.Cube001_24.geometry}
+                    material={materials['Material.026']}
+                />
+        </group>
+    )
+}
+
+useGLTF.preload('/wormpile.glb')
+
+export default Wormpile

@@ -1,0 +1,30 @@
+
+import { useRive, Layout, Fit, Alignment } from "@rive-app/react-canvas";
+
+//Loads the rive file
+export const RiveDemo = () => {
+    const { RiveComponent } = useRive({
+        src: "/assets/worm.riv",
+        stateMachines: "State Machine 1",
+        layout: new Layout({
+            fit: Fit.FitWidth,
+            alignment: Alignment.Center,
+        }),
+        autoplay: true,
+        onLoadError: () => console.log("ERROR LOADING RIVE"),
+
+        onLoad: () => console.log("LOADED RIVE"),
+    });
+
+    return <RiveComponent />;
+};
+
+export default function worm_bg() {
+    return (
+        <div style={{width: '1653px', height: '919px'}}>
+            <RiveDemo />
+        </div>
+    );
+}
+
+

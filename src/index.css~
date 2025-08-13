@@ -1,0 +1,336 @@
+@font-face {
+    font-family: 'octopussregular';
+    src: url('../public/fonts/octopuss_regular-webfont.woff2') format('woff2'),
+         url('../public/fonts/octopuss_regular-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'universbold_condensed';
+    src: url('../public/fonts/universcnbold-webfont.woff2') format('woff2'),
+    url('../public/fonts/universcnrg-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'universcondensed';
+    src: url('../public/fonts/universcnrg-webfont.woff2') format('woff2'),
+    url('../public/fonts/universcnrg-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+    scroll-behavior: smooth;
+}
+
+body {
+    background: #ffffff;
+    font-family: 'universcondensed', sans-serif;
+}
+
+@layer utilities {
+   
+    .c-space {
+        @apply sm:px-10 px-5;
+    }
+
+    .nav-ul {
+        @apply flex flex-col items-center gap-4 sm:flex-row md:gap-6 relative z-20;
+    }
+
+    .nav-li {
+        @apply text-squirmgreen font-octopussregular text-size transition-colors;
+    }
+
+    /*navbar*/
+    @media screen  and (min-width: 1024px) {
+        header.navbar {
+            @apply absolute top-12 left-21 right-21 h-36 z-50;
+        }
+    }
+
+    @media screen and (max-width: 1024px) and (min-width: 768px) {
+        header.navbar {
+            @apply absolute top-6 left-20 right-20 h-[120px] z-50;
+        }
+    }
+
+    /*@media screen and (max-width: 896px) and (min-width: 768px) {
+        header.navbar {
+            @apply absolute top-6 left-[60px] right-[60px] h-[96px] z-50;
+        }
+    }*/
+
+    @media screen and (min-width: 375px) and (max-width: 767px) {
+        header.navbar {
+            @apply absolute top-6 left-13 right-13 h-[60px] z-50;
+        }
+    }
+
+    /*text stroke width*/
+    @media screen and (min-width: 1024px) {
+        .text-stroke-width {
+            -webkit-text-stroke-width: 20px;
+            paint-order: stroke fill;
+        }
+    }
+
+    @media screen and (max-width: 1024px) and (min-width: 768px) {
+        .text-stroke-width {
+            -webkit-text-stroke-width: 14px;
+            paint-order: stroke fill;
+        }
+    }
+
+    @media screen and (min-width: 375px) and (max-width: 767px) {
+        .text-stroke-width {
+            -webkit-text-stroke-width: 4px;
+            paint-order: stroke fill;
+        }
+    }
+
+    /*logo text size*/
+    @media screen and (min-width: 1024px) {
+        .text-size {
+            @apply text-9xl;
+        }
+    }
+
+    @media screen and (max-width: 1024px) and (min-width: 896px) {
+        .text-size {
+            @apply text-8xl;
+        }
+    }
+
+    @media screen and (max-width: 895px) and (min-width: 768px) {
+        .text-size {
+            @apply text-[84px];
+        }
+    }
+
+    @media screen and (max-width: 767px) and (min-width: 375px) {
+        .text-size {
+            @apply text-4xl;
+        }
+    }
+
+    /*menu icon size*/
+    @media screen and (min-width: 1024px) {
+        .icon-size {
+            @apply w-32 h-32;
+        }
+    }
+
+    @media screen and (max-width: 1024px) and (min-width: 896px) {
+        .icon-size {
+            @apply w-24 h-24;
+        }
+    }
+
+    @media screen and (max-width: 895px) and (min-width: 768px) {
+        .icon-size {
+            @apply w-[84px] h-[84px];
+        }
+    }
+
+    @media screen and (max-width: 767px) and (min-width: 375px) {
+        .icon-size {
+            @apply w-9 h-9;
+        }
+    }
+
+
+    .nav-li {
+        @apply text-neutral-400 hover:text-white font-universcondensed max-sm:hover:bg-black-500 max-sm:w-full
+        max-sm:rounded-md py-2 max-sm:px-5;
+    }
+
+    .nav-li_a {
+        @apply text-lg md:text-base hover:text-white transition-colors;
+    }
+
+    .nav-sidebar {
+        @apply absolute left-0 right-0 bg-black-200 backdrop-blur-sm transition-all duration-300 ease-in-out
+        overflow-hidden z-20 mx-auto sm:hidden block;
+    }
+
+    .text-gray_gradient {
+        @apply bg-gradient-to-r from-[#BEC1CF] from-60% via-[#D5D8EA] via-60% to-[#D5D8EA] to-100% bg-clip-text
+        text-transparent;
+    }
+
+    /* button component */
+    .btn {
+        @apply flex gap-4 items-center justify-center cursor-pointer p-3 rounded-md bg-black-300  transition-all
+        active:scale-95 text-white mx-auto;
+    }
+
+    .btn-ping {
+        @apply animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75;
+    }
+
+    .btn-ping_dot {
+        @apply relative inline-flex rounded-full h-3 w-3 bg-green-500;
+    }
+
+    /*background section*/
+
+    .section-bg {
+        @apply inline-flex min-h-screen w-full items-center justify-center gap-2 overflow-hidden bg-white p-4;
+    }
+
+    /*background container*/
+
+    @media screen and (min-width: 1025px) {
+        div.BgContainer {
+            @apply w-[1852px] h-[952px] relative bg-squirmyellow rounded-[76px] outline outline-[24px] gap-9
+            outline-offset-[-24px] outline-squirmgreen overflow-hidden;
+        }
+    }
+
+    @media screen and (max-width: 1024px) and (min-width: 896px) {
+        div.BgContainer {
+            @apply flex flex-col justify-center items-center self-stretch overflow-hidden pt-[80px] px-[88px] gap-9
+            rounded-[76px] bg-squirmyellow outline outline-[12px] outline-offset-[-12px] outline-squirmgreen;
+        }
+    }
+
+    @media screen and (max-width: 895px) and (min-width: 768px) {
+        div.BgContainer {
+            @apply flex flex-col justify-center items-center self-stretch overflow-hidden gap-0 pt-[138px] px-[88px]
+            rounded-[76px] bg-squirmyellow outline outline-[12px] outline-offset-[-12px] outline-squirmgreen;
+        }
+    }
+
+    @media screen and (max-width: 767px) and (min-width: 375px) {
+        div.BgContainer {
+            @apply flex flex-col justify-center items-center self-stretch overflow-hidden gap-3 pt-[76px] px-[12px]
+            rounded-[76px] bg-squirmyellow outline outline-[12px] outline-offset-[-12px] outline-squirmgreen;
+        }
+    }
+
+    /* hero section */
+
+    /*rive canvas size*/
+
+    @media screen and (min-width: 1025px) {
+        div.riveCanvasSize {
+            @apply w-[1574px] h-[804px] left-[148px] top-[86px] absolute;
+        }
+    }
+
+    @media screen and (max-width: 1024px) and (min-width: 896px) {
+        div.riveCanvasSize {
+            @apply h-[415px] w-[812px];
+        }
+    }
+
+    @media screen and (max-width: 895px) and (min-width: 768px) {
+        div.riveCanvasSize {
+            @apply h-[312px] w-[609px];
+        }
+    }
+
+    @media screen and (max-width: 767px) and (min-width: 375px) {
+        div.riveCanvasSize {
+            @apply h-[162px] w-[309px];
+        }
+    }
+
+    /*text block*/
+
+    @media screen and (min-width: 1025px) {
+        div.hero-text {
+            @apply w-[619px] h-64 text-center justify-start text-black text-7xl;
+        }
+    }
+
+    @media screen and (max-width: 1024px) and (min-width: 896px) {
+        div.hero-text {
+            @apply h-[238px] w-[670px] text-center justify-start text-7xl text-black;
+        }
+    }
+
+    @media screen and (max-width: 895px) and (min-width: 768px) {
+        div.hero-text {
+            @apply w-[456px] h-[180px] text-center justify-center text-[48px] leading-[56px] text-black;
+        }
+    }
+
+    @media screen and (max-width: 767px) and (min-width: 375px) {
+        div.hero-text {
+            @apply w-[327px] h-[148px] text-center justify-start text-[32px] leading-10 text-black;
+        }
+    }
+
+
+    /*left text block*/
+
+    @media screen and (min-width: 1025px) {
+        div.left-text-block {
+            @apply h-72 p-6 left-[220px] top-[308px] absolute inline-flex justify-start items-start gap-2
+            overflow-hidden;
+        }
+    }
+
+    @media screen and (max-width: 1024px) and (min-width: 896px) {
+        div.left-text-block {
+            @apply flex h-72 items-center justify-center gap-2 overflow-hidden p-6;
+        }
+    }
+
+    @media screen and (max-width: 895px) and (min-width: 768px) {
+        div.left-text-block {
+            @apply flex h-[232px] items-center justify-center gap-2 overflow-hidden p-6;
+        }
+    }
+
+    @media screen and (max-width: 767px) and (min-width: 375px) {
+        div.left-text-block {
+            @apply flex h-[200px] items-center justify-center gap-2 overflow-hidden p-6;
+        }
+    }
+
+
+   /*right text block*/
+
+    @media screen and (min-width: 1025px) {
+        div.right-text-block {
+            @apply p-6 left-[958px] top-[550px] absolute inline-flex justify-start items-start gap-2 overflow-hidden;
+        }
+    }
+
+    @media screen and (max-width: 1024px) and (min-width: 896px) {
+        div.right-text-block {
+            @apply flex h-72 items-center justify-center gap-2 overflow-hidden p-6;
+        }
+    }
+
+    @media screen and (max-width: 895px) and (min-width: 768px) {
+        div.right-text-block {
+            @apply flex h-[232px] items-center justify-center gap-2 overflow-hidden p-6;
+        }
+    }
+
+    @media screen and (max-width: 767px) and (min-width: 375px) {
+        div.right-text-block {
+            @apply flex h-[200px] items-center justify-center gap-2 overflow-hidden p-6;
+        }
+    }
+
+    /*experience section*/
+    div.exCont {
+        @apply w-full h-full absolute inset-0 p-6 grid;
+    }
+
+    div.exContent, div.exOverlay {
+        @apply grid-area-1;
+    }
+}

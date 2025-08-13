@@ -1,0 +1,27 @@
+import React, { useRef } from 'react'
+import { useGLTF, PerspectiveCamera } from '@react-three/drei'
+
+const Worm = (props) => {
+    const { nodes, materials } = useGLTF('/worm.glb')
+    return (
+        <group {...props} dispose={null}>
+            <PerspectiveCamera
+                makeDefault={false}
+                far={1000}
+                near={0.1}
+                fov={22.895}
+                position={[-0.2, 0.068, 0.13]}
+                rotation={[-0.446, -0.858, -0.347]}
+            />
+            <mesh geometry={nodes.worm.geometry} material={materials.worm} />
+            <mesh geometry={nodes.Sphere.geometry} material={materials['Eye.001']} />
+            <mesh geometry={nodes.Sphere_1.geometry} material={materials.Pupil} />
+            <mesh geometry={nodes.Sphere002.geometry} material={materials['Eye.001']} />
+            <mesh geometry={nodes.Sphere002_1.geometry} material={materials.Pupil} />
+        </group>
+    )
+}
+
+useGLTF.preload('/worm.glb')
+
+export default Worm
