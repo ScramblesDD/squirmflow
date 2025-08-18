@@ -30,7 +30,7 @@ const iconData = [
 ];
 
 /*creates instructions for array behavior*/
-const IconOverlay = () => {
+const IconOverlay = ({ className }) => {
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const [dimensions, setDimensions] = useState({ width: 1440, height: 800 });
   const containerRef = useRef(null);
@@ -97,7 +97,7 @@ const IconOverlay = () => {
   };
 
   return (
-    <div ref={containerRef}>
+    <div ref={containerRef} className={className}>
       <div className="relative w-full h-full pointer-events-none">
         {iconData.map((icon, index) => {
           const position = getIconPosition(index);
@@ -171,7 +171,7 @@ const About = () => {
       <div className={"BgContainer"}>
         <div className={"w-full h-full relative inset-0 p-6"}>
           <Canvas
-            className={"w-full h-full rounded-[50px]"}
+            className={"absolute inset-0 w-full h-full rounded-[50px]"}
             shadows
             gl={{ toneMapping: THREE.AgXToneMapping }}
             camera={{
@@ -216,7 +216,7 @@ const About = () => {
           </Canvas>
 
           {/*calls the icon array*/}
-          <IconOverlay />
+          <IconOverlay className="absolute inset-0" />
         </div>
       </div>
     </section>
