@@ -54,7 +54,7 @@ const IconOverlay = () => {
   //constructs values for ellipse that array follows
   const scale = Math.max(0.4, Math.min(dimensions.width / 1440, 1.2));
   const centerX = dimensions.width / 2;
-  const centerY = dimensions.height * 0.7;
+  const centerY = dimensions.height * 0.5;
   const ellipseWidth = Math.min(dimensions.width * 0.8, 1200 * scale);
   const baseSize = Math.max(48, 120 * scale);
 

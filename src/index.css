@@ -191,27 +191,27 @@ body {
     @media screen and (min-width: 1025px) {
         div.BgContainer {
             @apply w-[1852px] h-[952px] relative bg-squirmyellow rounded-[76px] outline outline-[24px] gap-9
-            outline-offset-[-24px] outline-squirmgreen overflow-hidden;
+            outline-offset-[-24px] outline-squirmgreen overflow-hidden flex items-center justify-center;
         }
     }
 
     @media screen and (max-width: 1024px) and (min-width: 896px) {
         div.BgContainer {
-            @apply flex flex-col justify-center items-center self-stretch overflow-hidden pt-[80px] px-[88px] gap-9
+            @apply flex flex-col justify-center items-center self-stretch overflow-hidden px-[88px] gap-9
             rounded-[76px] bg-squirmyellow outline outline-[12px] outline-offset-[-12px] outline-squirmgreen;
         }
     }
 
     @media screen and (max-width: 895px) and (min-width: 768px) {
         div.BgContainer {
-            @apply flex flex-col justify-center items-center self-stretch overflow-hidden gap-0 pt-[138px] px-[88px]
+            @apply flex flex-col justify-center items-center self-stretch overflow-hidden gap-0 px-[88px]
             rounded-[76px] bg-squirmyellow outline outline-[12px] outline-offset-[-12px] outline-squirmgreen;
         }
     }
 
     @media screen and (max-width: 767px) and (min-width: 375px) {
         div.BgContainer {
-            @apply flex flex-col justify-center items-center self-stretch overflow-hidden gap-3 pt-[76px] px-[12px]
+            @apply flex flex-col justify-center items-center self-stretch overflow-hidden gap-3 px-[12px]
             rounded-[76px] bg-squirmyellow outline outline-[12px] outline-offset-[-12px] outline-squirmgreen;
         }
     }
