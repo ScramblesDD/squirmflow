@@ -54,8 +54,8 @@ const IconOverlay = ({ className }) => {
   //constructs values for ellipse that array follows
   const scale = Math.max(0.4, Math.min(dimensions.width / 1440, 1.2));
   const centerX = dimensions.width / 2;
-  const centerY = dimensions.height * 0.5;
   const ellipseWidth = Math.min(dimensions.width * 0.8, 1200 * scale);
+  const centerY = dimensions.height / 2 + (ellipseWidth * 0.3) / 2;
   const baseSize = Math.max(48, 120 * scale);
 
   // Position icons equidistant along the ellipse perimeter
