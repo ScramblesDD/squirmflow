@@ -32,44 +32,17 @@ const iconData = [
 /*creates instructions for array behavior*/
 const IconOverlay = ({ className }) => {
   const [hoveredIndex, setHoveredIndex] = useState(null);
-  const [dimensions, setDimensions] = useState({ width: 1440, height: 800 });
-  const containerRef = useRef(null);
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
 
   useEffect(() => {
-    const updateDimensions = () => {
-      if (containerRef.current) {
-        const rect = containerRef.current.getBoundingClientRect();
-        setDimensions({
-          width: rect.width,
-          height: rect.height,
-        });
-      }
-    };
-
-    updateDimensions();
-    window.addEventListener("resize", updateDimensions);
-    return () => window.removeEventListener("resize", updateDimensions);
+    const handleResize = () => setScreenWidth(window.innerWidth);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  //constructs values for ellipse that array follows
-  const scale = Math.max(0.4, Math.min(dimensions.width / 1440, 1.2));
-  const centerX = dimensions.width / 2;
-  const centerY = dimensions.height / 2;
+  const scale = Math.max(0.4, Math.min(screenWidth / 1440, 1.2));
   const baseSize = Math.max(48, 120 * scale);
 
-  // Position icons in a straight line
-  const getIconPosition = (index) => {
-    const totalIcons = iconData.length;
-    const spacing = 150 * scale; // Make spacing responsive
-    const totalWidth = (totalIcons - 1) * spacing;
-    const startX = centerX - totalWidth / 2;
-    const x = startX + index * spacing;
-    const y = centerY;
-
-    return { x, y };
-  };
-
-  //changes the size of icons when one is hovered over
   const getIconSize = (index) => {
     if (hoveredIndex === null) return baseSize;
     const distance = Math.abs(index - hoveredIndex);
@@ -86,70 +59,49 @@ const IconOverlay = ({ className }) => {
   };
 
   return (
-    <div ref={containerRef} className={className}>
-      <div className="relative w-full h-full pointer-events-none">
-        {iconData.map((icon, index) => {
-          const position = getIconPosition(index);
-          const size = getIconSize(index);
-          const opacity = getIconOpacity(index);
+    <div className={`flex justify-center items-center ${className}`}>
+      {iconData.map((icon, index) => {
+        const size = getIconSize(index);
+        const opacity = getIconOpacity(index);
 
-          return (
-            <div
-              key={icon.id}
-              className="absolute transform -translate-x-1/2 -translate-y-1/2 cursor-pointer
-                            transition-all duration-300 ease-out pointer-events-auto"
-              style={{
-                left: position.x,
-                top: position.y,
-                width: size,
-                height: size,
-                opacity,
-                zIndex: hoveredIndex === index ? 100 : 50,
-              }}
-              onMouseEnter={() => setHoveredIndex(index)}
-              onMouseLeave={() => setHoveredIndex(null)}
-            >
-              <div
-                className="w-full h-full rounded-xl shadow-lg transition-all duration-300"
-                style={{
-                  backgroundColor: `transparent`, // Add transparency
-                  boxShadow:
-                    hoveredIndex === index
-                      ? "0 8px 25px rgba(0,0,0,0.25)"
-                      : "0 4px 15px rgba(0,0,0,0.15)",
-                }}
-              >
-                <img
-                  src={icon.image}
-                  alt={`Icon ${icon.id}`}
-                  className={"w-full h-full object-contain rounded-xl"}
-                  style={{
-                    filter:
-                      hoveredIndex === index
-                        ? "brightness(1.1)"
-                        : "brightness(1)",
-                  }}
-                />
-              </div>
-            </div>
-          );
-        })}
-
-        {/* Info Panel - only visible on hover */}
-        {hoveredIndex !== null && (
+        return (
           <div
-            className="absolute top-6 left-6 bg-black/20 backdrop-blur-md rounded-xl p-4 shadow-lg
-                    pointer-events-none"
+            key={icon.id}
+            className="cursor-pointer transition-all duration-300 ease-out"
+            style={{
+              width: size,
+              height: size,
+              opacity,
+              margin: "0 10px",
+            }}
+            onMouseEnter={() => setHoveredIndex(index)}
+            onMouseLeave={() => setHoveredIndex(null)}
           >
-            <h3 className="text-lg font-semibold text-white mb-1">
-              {iconData[hoveredIndex].name}
-            </h3>
-            <p className="text-sm text-white/80">
-              Icon {hoveredIndex + 1} of {iconData.length}
-            </p>
+            <div
+              className="w-full h-full rounded-xl shadow-lg transition-all duration-300"
+              style={{
+                backgroundColor: `transparent`, // Add transparency
+                boxShadow:
+                  hoveredIndex === index
+                    ? "0 8px 25px rgba(0,0,0,0.25)"
+                    : "0 4px 15px rgba(0,0,0,0.15)",
+              }}
+            >
+              <img
+                src={icon.image}
+                alt={`Icon ${icon.id}`}
+                className={"w-full h-full object-contain rounded-xl"}
+                style={{
+                  filter:
+                    hoveredIndex === index
+                      ? "brightness(1.1)"
+                      : "brightness(1)",
+                }}
+              />
+            </div>
           </div>
-        )}
-      </div>
+        );
+      })}
     </div>
   );
 };
@@ -205,7 +157,7 @@ const About = () => {
           </Canvas>
 
           {/*calls the icon array*/}
-          <IconOverlay className="absolute inset-0" />
+          <IconOverlay className="absolute top-1/3 left-1/2 -translate-x-1/2" />
         </div>
       </div>
     </section>
