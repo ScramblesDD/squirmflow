@@ -45,36 +45,18 @@ const IconOverlay = ({ className }) => {
   const baseSize = Math.max(48, 120 * scale);
 
   const handleMouseEnter = (index) => {
-    gsap.to(iconRefs.current, {
-      width: (i) => {
-        const distance = Math.abs(index - i);
-        const multipliers = [1.4, 1.2, 1, 0.8, 0.6];
-        return baseSize * (multipliers[distance] || 0.6);
-      },
-      height: (i) => {
-        const distance = Math.abs(index - i);
-        const multipliers = [1.4, 1.2, 1, 0.8, 0.6];
-        return baseSize * (multipliers[distance] || 0.6);
-      },
-      opacity: (i) => {
-        const distance = Math.abs(index - i);
-        const opacities = [1, 0.95, 0.8, 0.6, 0.4];
-        return opacities[distance] || 0.4;
-      },
+    gsap.to(iconRefs.current[index], {
+      scale: 1.2,
       duration: 0.3,
       ease: "power2.out",
-      stagger: 0.05,
     });
   };
 
-  const handleMouseLeave = () => {
-    gsap.to(iconRefs.current, {
-      width: baseSize,
-      height: baseSize,
-      opacity: 0.9,
+  const handleMouseLeave = (index) => {
+    gsap.to(iconRefs.current[index], {
+      scale: 1,
       duration: 0.3,
       ease: "power2.out",
-      stagger: 0.05,
     });
   };
 
@@ -84,7 +66,9 @@ const IconOverlay = ({ className }) => {
         return (
           <div
             key={icon.id}
-            ref={(el) => (iconRefs.current[index] = el)}
+            ref={(el) => {
+              if (el) iconRefs.current[index] = el;
+            }}
             className="cursor-pointer pointer-events-auto"
             style={{
               width: baseSize,
@@ -92,7 +76,7 @@ const IconOverlay = ({ className }) => {
               margin: "0 10px",
             }}
             onMouseEnter={() => handleMouseEnter(index)}
-            onMouseLeave={handleMouseLeave}
+            onMouseLeave={() => handleMouseLeave(index)}
           >
             <div
               className="w-full h-full rounded-xl shadow-lg"
