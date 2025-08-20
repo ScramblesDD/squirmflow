@@ -54,30 +54,19 @@ const IconOverlay = ({ className }) => {
   //constructs values for ellipse that array follows
   const scale = Math.max(0.4, Math.min(dimensions.width / 1440, 1.2));
   const centerX = dimensions.width / 2;
-  const ellipseWidth = Math.min(dimensions.width * 0.8, 1200 * scale);
-  const centerY = dimensions.height / 2 + (ellipseWidth * 0.3) / 2;
+  const centerY = dimensions.height / 2;
   const baseSize = Math.max(48, 120 * scale);
 
-  // Position icons equidistant along the ellipse perimeter
+  // Position icons in a straight line
   const getIconPosition = (index) => {
     const totalIcons = iconData.length;
-    const angleStep = Math.PI / (totalIcons - 1); // Distribute across top half of ellipse
-    const angle = index * angleStep; // 0 to π
+    const spacing = 150 * scale; // Make spacing responsive
+    const totalWidth = (totalIcons - 1) * spacing;
+    const startX = centerX - totalWidth / 2;
+    const x = startX + index * spacing;
+    const y = centerY;
 
-    const radiusX = ellipseWidth / 2;
-    const radiusY = ellipseWidth * 0.3; // Height of ellipse
-
-    const x = centerX + radiusX * Math.cos(angle);
-    const y = centerY - radiusY * Math.sin(angle);
-
-    // Make edge icons responsive to screen height
-    const edgeIconOffset =
-      dimensions.height < 600 ? dimensions.height * 0.05 : 30 * scale;
-
-    return {
-      x,
-      y: index === 0 || index === totalIcons - 1 ? centerY + edgeIconOffset : y,
-    };
+    return { x, y };
   };
 
   //changes the size of icons when one is hovered over
