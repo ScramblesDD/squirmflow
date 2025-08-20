@@ -3,6 +3,7 @@ import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import Wormpile from "../components/wormpile.jsx";
 import * as THREE from "three";
 import { Vector3 } from "three";
+import gsap from "gsap";
 
 function Rig() {
   const { camera, pointer } = useThree();
@@ -31,7 +32,7 @@ const iconData = [
 
 /*creates instructions for array behavior*/
 const IconOverlay = ({ className }) => {
-  const [hoveredIndex, setHoveredIndex] = useState(null);
+  const iconRefs = useRef([]);
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
 
   useEffect(() => {
@@ -43,60 +44,66 @@ const IconOverlay = ({ className }) => {
   const scale = Math.max(0.4, Math.min(screenWidth / 1440, 1.2));
   const baseSize = Math.max(48, 120 * scale);
 
-  const getIconSize = (index) => {
-    if (hoveredIndex === null) return baseSize;
-    const distance = Math.abs(index - hoveredIndex);
-    const multipliers = [1.4, 1.2, 1, 0.8, 0.6];
-    return baseSize * (multipliers[distance] || 0.6);
+  const handleMouseEnter = (index) => {
+    gsap.to(iconRefs.current, {
+      width: (i) => {
+        const distance = Math.abs(index - i);
+        const multipliers = [1.4, 1.2, 1, 0.8, 0.6];
+        return baseSize * (multipliers[distance] || 0.6);
+      },
+      height: (i) => {
+        const distance = Math.abs(index - i);
+        const multipliers = [1.4, 1.2, 1, 0.8, 0.6];
+        return baseSize * (multipliers[distance] || 0.6);
+      },
+      opacity: (i) => {
+        const distance = Math.abs(index - i);
+        const opacities = [1, 0.95, 0.8, 0.6, 0.4];
+        return opacities[distance] || 0.4;
+      },
+      duration: 0.3,
+      ease: "power2.out",
+      stagger: 0.05,
+    });
   };
 
-  //changes opacity based on hover
-  const getIconOpacity = (index) => {
-    if (hoveredIndex === null) return 0.9;
-    const distance = Math.abs(index - hoveredIndex);
-    const opacities = [1, 0.95, 0.8, 0.6, 0.4];
-    return opacities[distance] || 0.4;
+  const handleMouseLeave = () => {
+    gsap.to(iconRefs.current, {
+      width: baseSize,
+      height: baseSize,
+      opacity: 0.9,
+      duration: 0.3,
+      ease: "power2.out",
+      stagger: 0.05,
+    });
   };
 
   return (
     <div className={`flex justify-center items-center ${className}`}>
       {iconData.map((icon, index) => {
-        const size = getIconSize(index);
-        const opacity = getIconOpacity(index);
-
         return (
           <div
             key={icon.id}
-            className="cursor-pointer transition-all duration-300 ease-out pointer-events-auto"
+            ref={(el) => (iconRefs.current[index] = el)}
+            className="cursor-pointer pointer-events-auto"
             style={{
-              width: size,
-              height: size,
-              opacity,
+              width: baseSize,
+              height: baseSize,
               margin: "0 10px",
             }}
-            onMouseEnter={() => setHoveredIndex(index)}
-            onMouseLeave={() => setHoveredIndex(null)}
+            onMouseEnter={() => handleMouseEnter(index)}
+            onMouseLeave={handleMouseLeave}
           >
             <div
-              className="w-full h-full rounded-xl shadow-lg transition-all duration-300"
+              className="w-full h-full rounded-xl shadow-lg"
               style={{
                 backgroundColor: `transparent`, // Add transparency
-                boxShadow:
-                  hoveredIndex === index
-                    ? "0 8px 25px rgba(0,0,0,0.25)"
-                    : "0 4px 15px rgba(0,0,0,0.15)",
               }}
             >
               <img
                 src={icon.image}
                 alt={`Icon ${icon.id}`}
                 className={"w-full h-full object-contain rounded-xl"}
-                style={{
-                  filter:
-                    hoveredIndex === index
-                      ? "brightness(1.1)"
-                      : "brightness(1)",
-                }}
               />
             </div>
           </div>
