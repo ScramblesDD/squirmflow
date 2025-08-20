@@ -67,7 +67,7 @@ const IconOverlay = ({ className }) => {
         return (
           <div
             key={icon.id}
-            className="cursor-pointer transition-all duration-300 ease-out"
+            className="cursor-pointer transition-all duration-300 ease-out pointer-events-auto"
             style={{
               width: size,
               height: size,
@@ -157,7 +157,7 @@ const About = () => {
           </Canvas>
 
           {/*calls the icon array*/}
-          <IconOverlay className="absolute top-1/3 left-1/2 -translate-x-1/2" />
+          <IconOverlay className="absolute top-1/3 left-1/2 -translate-x-1/2 pointer-events-none" />
         </div>
       </div>
     </section>
