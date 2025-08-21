@@ -45,15 +45,19 @@ const IconOverlay = ({ className }) => {
   const baseSize = Math.max(48, 120 * scale);
 
   const handleMouseEnter = (index) => {
-    gsap.to(iconRefs.current[index], {
-      scale: 1.2,
+    gsap.to(iconRefs.current, {
+      scale: (i) => {
+        const distance = Math.abs(index - i);
+        const multipliers = [1.2, 1.1, 1, 0.9, 0.8];
+        return multipliers[distance] || 0.8;
+      },
       duration: 0.3,
       ease: "power2.out",
     });
   };
 
-  const handleMouseLeave = (index) => {
-    gsap.to(iconRefs.current[index], {
+  const handleMouseLeave = () => {
+    gsap.to(iconRefs.current, {
       scale: 1,
       duration: 0.3,
       ease: "power2.out",
