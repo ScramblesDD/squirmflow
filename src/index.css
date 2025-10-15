@@ -52,7 +52,7 @@ body {
     /*navbar*/
     @media screen  and (min-width: 1024px) {
         header.navbar {
-            @apply absolute top-12 left-21 right-21 h-36 z-50;
+            @apply absolute top-13 left-21 right-21 h-[141px] z-50;
         }
     }
 
@@ -61,12 +61,6 @@ body {
             @apply absolute top-6 left-20 right-20 h-[120px] z-50;
         }
     }
-
-    /*@media screen and (max-width: 896px) and (min-width: 768px) {
-        header.navbar {
-            @apply absolute top-6 left-[60px] right-[60px] h-[96px] z-50;
-        }
-    }*/
 
     @media screen and (min-width: 375px) and (max-width: 767px) {
         header.navbar {
@@ -183,15 +177,15 @@ body {
     /*background section*/
 
     .section-bg {
-        @apply inline-flex min-h-screen w-full items-center justify-center gap-2 overflow-hidden bg-white p-4;
+        @apply inline-flex min-h-screen w-full items-center justify-center gap-2 p-4;
     }
 
     /*background container*/
 
     @media screen and (min-width: 1025px) {
         div.BgContainer {
-            @apply w-[1852px] h-[952px] relative bg-squirmyellow rounded-[76px] outline outline-[24px] gap-9
-            outline-offset-[-24px] outline-squirmgreen overflow-hidden;
+            @apply absolute w-[1852px] h-[904px] flex flex-col justify-center items-center  bg-squirmyellow
+            rounded-[76px] outline outline-[24px] gap-9 outline-offset-[-24px] outline-squirmgreen overflow-hidden;
         }
     }
 
@@ -218,11 +212,12 @@ body {
 
     /* hero section */
 
+
     /*rive canvas size*/
 
     @media screen and (min-width: 1025px) {
         div.riveCanvasSize {
-            @apply w-[1574px] h-[804px] left-[148px] top-[86px] absolute;
+            @apply w-[1574px] h-[784px] left-[139px] top-[50px] absolute;
         }
     }
 
@@ -275,7 +270,7 @@ body {
 
     @media screen and (min-width: 1025px) {
         div.left-text-block {
-            @apply h-72 p-6 left-[220px] top-[308px] absolute inline-flex justify-start items-start gap-2
+            @apply h-72 p-6 left-[220px] top-[246px] absolute inline-flex justify-start items-start gap-2
             overflow-hidden;
         }
     }
@@ -325,4 +320,20 @@ body {
         }
     }
 
+    /*about section*/
+
+    @keyframes fade-in {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+
+    canvas {
+        opacity: 0;
+        touch-action: none;
+        animation: fade-in 5s ease 1s forwards;
+    }
 }

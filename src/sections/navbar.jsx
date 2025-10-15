@@ -32,7 +32,7 @@ const Navbar = () => {
                 <div className={"flex justify-between items-center py-5 mx-auto"}>
                     <a href={"/"} className={"text-squirmgreen font-octopussregular text-size text-stroke " +
                         "text-stroke-width text-stroke-white transition-colors"}>
-                        Squirmflow
+                        squirmflow
                     </a>
 
                     {/*hamburger menu*/}

@@ -1,159 +1,108 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import Wormpile from "../components/wormpile.jsx";
-import * as THREE from "three";
-import { Vector3 } from "three";
-import gsap from "gsap";
 
-function Rig() {
-  const { camera, pointer } = useThree();
-  const vec = new Vector3();
+import { useRef } from 'react'
+import { Canvas, extend, useFrame, useThree } from '@react-three/fiber'
+import { MeshPortalMaterial, Gltf, ScrollControls, Scroll } from '@react-three/drei'
+import { proxy, useSnapshot } from 'valtio'
+import { usePrefersReducedMotion } from '../constants/index.js'
+import {geometry} from "maath";
 
-  return useFrame(() => {
-    camera.position.lerp(
-      vec.set(pointer.x, pointer.y, camera.position.z),
-      0.05
-    );
-    camera.lookAt(0, 0, 0);
-  });
+extend(geometry)
+const GOLDENRATIO = 1.61803398875
+const state = proxy({
+    urls: [1, 2, 3, 4, 5, 6, 7].map((u) => `/icons/${u}.glb`)
+})
+
+function Frame({ index, url, name, width = 1, height = GOLDENRATIO, ...props }) {
+    const portal = useRef()
+    const modelRef = useRef()
+    const colors = ['#D72AC0', '#4A3AD8', '#31E3E3', '#31D249', '#DDE327', '#E58A2F', '#EA2F2F']
+    const backgroundColor = colors[index % colors.length]
+
+    // Random offsets for more natural animation timing
+    const offset = useRef(Math.random() * Math.PI * 2)
+
+    //If user prefers reduced motion
+    const prefersReducedMotion = usePrefersReducedMotion()
+
+    //skip animation entirely, else run animation
+    useFrame((state, delta) => {
+        if (!modelRef.current || prefersReducedMotion) return
+
+        const t = state.clock.getElapsedTime() + offset.current
+
+        //individual animations
+        switch (index % 7) {
+            case 0: // spin
+                modelRef.current.rotation.y += delta
+                break
+            case 1: // bounce
+                modelRef.current.position.y = Math.sin(t * 2) * 0.2
+                break
+            case 2: // float up/down + slow rotate
+                modelRef.current.rotation.y = modelRef.current.rotation.z += delta
+                modelRef.current.position.y = Math.sin(t) * 0.15
+                break
+            case 3: // wobble
+                modelRef.current.rotation.x = Math.sin(t * 2) * 0.2
+                modelRef.current.rotation.z = Math.cos(t * 2) * 0.2
+                break
+            case 4: // rotate
+                modelRef.current.rotation.z = modelRef.current.rotation.y += delta
+                break
+            case 5: // spin
+                modelRef.current.rotation.y += delta
+                break
+            case 6: // drift diagonally
+                modelRef.current.position.x = Math.sin(t * 1.5) * 0.2
+                modelRef.current.position.y = Math.cos(t * 1.5) * 0.2
+                break
+        }
+    })
+
+    return (
+        <group {...props}>
+            <Link to={`/item/${name}`}>
+                <mesh name={name}>
+                    <roundedPlaneGeometry args={[width, height, 0.1]} />
+                    <MeshPortalMaterial ref={portal} events={true}>
+                        <ambientLight />
+                        <color attach="background" args={[backgroundColor]} />
+                        <Gltf ref={modelRef} src={url} scale={0.5} />
+                    </MeshPortalMaterial>
+                </mesh>
+            </Link>
+        </group>
+    )
 }
 
-/*Icon Array*/
-/*calls icons for array*/
-const iconData = [
-  { id: 7, image: "/assets/7.svg" },
-  { id: 6, image: "/assets/6.svg" },
-  { id: 5, image: "/assets/5.svg" },
-  { id: 4, image: "/assets/4.svg" },
-  { id: 3, image: "/assets/3.svg" },
-  { id: 2, image: "/assets/2.svg" },
-  { id: 1, image: "/assets/1.svg" },
-];
+function Items() {
+    const { urls } = useSnapshot(state)
+    const { width } = useThree((state) => state.viewport)
+    const xW = 1.2
 
-/*creates instructions for array behavior*/
-const IconOverlay = ({ className }) => {
-  const iconRefs = useRef([]);
-  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+    return (
+        <ScrollControls horizontal damping={0.1} pages={(width - xW + urls.length * xW) / width}>
+            <Scroll>
+                <group>
+                    {urls.map((url, i) => (
+                        <Frame key={i} index={i} name={`0${i + 1}`} url={url} position={[i * 1.2, 0, 0]} />
+                    ))}
+                </group>
+            </Scroll>
+        </ScrollControls>
+    )
+}
 
-  useEffect(() => {
-    const handleResize = () => setScreenWidth(window.innerWidth);
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  const scale = Math.max(0.4, Math.min(screenWidth / 1440, 1.2));
-  const baseSize = Math.max(48, 120 * scale);
-
-  const handleMouseEnter = (index) => {
-    gsap.to(iconRefs.current, {
-      scale: (i) => {
-        const distance = Math.abs(index - i);
-        const multipliers = [1.2, 1.1, 1, 0.9, 0.8];
-        return multipliers[distance] || 0.8;
-      },
-      duration: 0.3,
-      ease: "power2.out",
-    });
-  };
-
-  const handleMouseLeave = () => {
-    gsap.to(iconRefs.current, {
-      scale: 1,
-      duration: 0.3,
-      ease: "power2.out",
-    });
-  };
-
-  return (
-    <div className={`flex justify-center items-center ${className}`}>
-      {iconData.map((icon, index) => {
-        return (
-          <div
-            key={icon.id}
-            ref={(el) => {
-              if (el) iconRefs.current[index] = el;
-            }}
-            className="cursor-pointer pointer-events-auto"
-            style={{
-              width: baseSize,
-              height: baseSize,
-              margin: "0 10px",
-            }}
-            onMouseEnter={() => handleMouseEnter(index)}
-            onMouseLeave={() => handleMouseLeave(index)}
-          >
-            <div
-              className="w-full h-full rounded-xl shadow-lg"
-              style={{
-                backgroundColor: `transparent`, // Add transparency
-              }}
-            >
-              <img
-                src={icon.image}
-                alt={`Icon ${icon.id}`}
-                className={"w-full h-full object-contain rounded-xl"}
-              />
-            </div>
-          </div>
-        );
-      })}
-    </div>
-  );
-};
 
 const About = () => {
+
   return (
     <section className={"section-bg"}>
       <div className={"BgContainer"}>
-        <div className={"w-full h-full relative inset-0 p-6"}>
-          <Canvas
-            className={"absolute inset-0 w-full h-full rounded-[50px]"}
-            shadows
-            gl={{ toneMapping: THREE.AgXToneMapping }}
-            camera={{
-              position: [7.569, 1.09, -8],
-              far: 40,
-              near: 4,
-              fov: 20.968,
-              rotation: [-3.736, 1.419, 2.714],
-            }}
-          >
-            <ambientLight intensity={0.75} />
-
-            {/*lights*/}
-
-            <pointLight
-              intensity={10}
-              decay={2}
-              position={[-1.277, 0.618, -1.638]}
-              rotation={[-Math.PI / 2, 0, 0]}
-              castShadow={true}
-            />
-
-            <directionalLight
-              size={1}
-              intensity={5}
-              position={[0, 2.93, 0]}
-              castShadow={true}
-            />
-
-            <directionalLight
-              size={1}
-              intensity={3}
-              color={"#ffffff"}
-              decay={2}
-              position={[2.4, 1.7, -2.62]}
-              castShadow={true}
-            />
-
-            <Wormpile position={[0, -0.75, 0]} rotation={[0, 1.4, 0]} />
-
-            <Rig />
+          <Canvas gl={{ localClippingEnabled: true }} camera={{ fov: 75, position: [0, 0, 2] }}>
+              <color attach="background" args={['#E4C410']} />
+              <Items />
           </Canvas>
-
-          {/*calls the icon array*/}
-          <IconOverlay className="absolute top-1/3 left-1/2 -translate-x-1/2 pointer-events-none" />
-        </div>
       </div>
     </section>
   );
