@@ -1,5 +1,6 @@
 
 import { useRef } from 'react'
+import { Link } from 'wouter'
 import { Canvas, extend, useFrame, useThree } from '@react-three/fiber'
 import { MeshPortalMaterial, Gltf, ScrollControls, Scroll } from '@react-three/drei'
 import { proxy, useSnapshot } from 'valtio'
