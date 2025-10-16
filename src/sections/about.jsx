@@ -1,6 +1,6 @@
 
 import { useRef } from 'react'
-import { Link } from 'wouter'
+import { useLocation } from 'wouter'
 import { Canvas, extend, useFrame, useThree } from '@react-three/fiber'
 import { MeshPortalMaterial, Gltf, ScrollControls, Scroll } from '@react-three/drei'
 import { proxy, useSnapshot } from 'valtio'
@@ -14,6 +14,7 @@ const state = proxy({
 })
 
 function Frame({ index, url, name, width = 1, height = GOLDENRATIO, ...props }) {
+    const [, setLocation] = useLocation()
     const portal = useRef()
     const modelRef = useRef()
     const colors = ['#D72AC0', '#4A3AD8', '#31E3E3', '#31D249', '#DDE327', '#E58A2F', '#EA2F2F']
@@ -62,16 +63,14 @@ function Frame({ index, url, name, width = 1, height = GOLDENRATIO, ...props }) 
 
     return (
         <group {...props}>
-            <Link to={`/item/${name}`}>
-                <mesh name={name}>
-                    <roundedPlaneGeometry args={[width, height, 0.1]} />
-                    <MeshPortalMaterial ref={portal} events={true}>
-                        <ambientLight />
-                        <color attach="background" args={[backgroundColor]} />
-                        <Gltf ref={modelRef} src={url} scale={0.5} />
-                    </MeshPortalMaterial>
-                </mesh>
-            </Link>
+            <mesh name={name} onClick={() => setLocation('/item/' + name)}>
+                <roundedPlaneGeometry args={[width, height, 0.1]} />
+                <MeshPortalMaterial ref={portal} events={true}>
+                    <ambientLight />
+                    <color attach="background" args={[backgroundColor]} />
+                    <Gltf ref={modelRef} src={url} scale={0.5} />
+                </MeshPortalMaterial>
+            </mesh>
         </group>
     )
 }
