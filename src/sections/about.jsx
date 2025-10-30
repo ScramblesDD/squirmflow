@@ -1,7 +1,7 @@
 
 import { Canvas } from '@react-three/fiber'
 import { Display } from '../components/display.jsx'
-import {Environment, PerspectiveCamera} from "@react-three/drei";
+import {Environment, OrbitControls} from "@react-three/drei";
 import {useControls} from "leva";
 import {useMediaQuery} from "react-responsive";
 import {calculateSizes} from "../constants/index.js";
@@ -45,7 +45,7 @@ const About = () => {
                     <Environment background={false} preset={"apartment"} intensity={0.75}/>
                     <ambientLight />
                     <Display position={sizes.zPos} rotation={[90, 0, 0]} scale={sizes.displayScale}/>
-
+                    <OrbitControls minPolarAngle={Math.PI / 3} maxPolarAngle={Math.PI / 2} minAzimuthAngle={-Math.PI / 4} maxAzimuthAngle={Math.PI / 4}/>
                 </Canvas>
             </div>
         </section>
