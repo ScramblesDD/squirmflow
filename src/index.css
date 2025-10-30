@@ -185,7 +185,8 @@ body {
     @media screen and (min-width: 1025px) {
         div.BgContainer {
             @apply absolute w-[1852px] h-[904px] flex flex-col justify-center items-center  bg-squirmyellow
-            rounded-[76px] outline outline-[24px] gap-9 outline-offset-[-24px] outline-squirmgreen overflow-hidden;
+            rounded-[76px] outline outline-[24px] gap-9 outline-offset-[-24px] p-[24px] outline-squirmgreen
+            overflow-hidden;
         }
     }
 
@@ -205,7 +206,7 @@ body {
 
     @media screen and (max-width: 767px) and (min-width: 375px) {
         div.BgContainer {
-            @apply flex flex-col justify-center items-center self-stretch overflow-hidden gap-3 pt-[76px] px-[12px]
+            @apply w-full flex flex-col justify-center items-center self-stretch overflow-hidden gap-3 pt-[76px] px-[12px]
             rounded-[76px] bg-squirmyellow outline outline-[12px] outline-offset-[-12px] outline-squirmgreen;
         }
     }
@@ -322,18 +323,33 @@ body {
 
     /*about section*/
 
-    @keyframes fade-in {
-        from {
-            opacity: 0;
-        }
-        to {
-            opacity: 1;
+    @media screen and (min-width: 1025px) {
+        div.aboutBg {
+            @apply absolute w-[1852px] h-[904px] flex flex-col justify-center items-center  bg-squirmyellow
+            rounded-[76px] outline outline-[24px] gap-9 outline-offset-[-24px] p-[24px] outline-squirmgreen
+            overflow-hidden;
         }
     }
 
-    canvas {
-        opacity: 0;
-        touch-action: none;
-        animation: fade-in 5s ease 1s forwards;
+    @media screen and (max-width: 1024px) and (min-width: 896px) {
+        div.aboutBg {
+            @apply flex flex-col justify-center items-center self-stretch w-full overflow-hidden gap-9
+            rounded-[76px] bg-squirmyellow outline outline-[12px] outline-offset-[-12px] outline-squirmgreen;
+        }
     }
+
+    @media screen and (max-width: 895px) and (min-width: 768px) {
+        div.aboutBg {
+            @apply flex flex-col justify-center items-center self-stretch overflow-hidden w-full gap-0
+            rounded-[76px] bg-squirmyellow outline outline-[12px] outline-offset-[-12px] outline-squirmgreen;
+        }
+    }
+
+    @media screen and (max-width: 767px) and (min-width: 375px) {
+        div.aboutBg {
+            @apply flex flex-col justify-center items-center self-stretch overflow-hidden w-full gap-3 pt-[76px] px-[12px]
+            rounded-[76px] bg-squirmyellow outline outline-[12px] outline-offset-[-12px] outline-squirmgreen;
+        }
+    }
+    
 }

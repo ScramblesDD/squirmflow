@@ -1,0 +1,129 @@
+
+
+import React, { useRef } from 'react'
+import { useGLTF } from '@react-three/drei'
+
+export function Display(props) {
+  const { nodes, materials } = useGLTF('/models/display.glb')
+  return (
+    <group {...props} dispose={null}>
+      <mesh
+        castShadow
+        receiveShadow
+        geometry={nodes.Curve017.geometry}
+        material={materials['Material.015']}
+      />
+      <mesh
+        castShadow
+        receiveShadow
+        geometry={nodes.Curve017_1.geometry}
+        material={materials.Material}
+      />
+      <mesh
+        castShadow
+        receiveShadow
+        geometry={nodes.Curve017_2.geometry}
+        material={materials['Material.017']}
+      />
+      <mesh
+        castShadow
+        receiveShadow
+        geometry={nodes.Curve017_3.geometry}
+        material={materials['Material.016']}
+      />
+      <mesh
+        castShadow
+        receiveShadow
+        geometry={nodes.Curve017_4.geometry}
+        material={materials['Material.011']}
+      />
+      <mesh
+        castShadow
+        receiveShadow
+        geometry={nodes.Curve017_5.geometry}
+        material={materials['Material.008']}
+      />
+      <mesh
+        castShadow
+        receiveShadow
+        geometry={nodes.Curve017_6.geometry}
+        material={materials['Material.009']}
+      />
+      <mesh
+        castShadow
+        receiveShadow
+        geometry={nodes.Curve017_7.geometry}
+        material={materials['Material.010']}
+      />
+      <mesh
+        castShadow
+        receiveShadow
+        geometry={nodes.Curve017_8.geometry}
+        material={materials['Material.007']}
+      />
+      <mesh
+        castShadow
+        receiveShadow
+        geometry={nodes.Curve017_9.geometry}
+        material={materials['Material.005']}
+      />
+      <mesh
+        castShadow
+        receiveShadow
+        geometry={nodes.Curve017_10.geometry}
+        material={materials['Material.006']}
+      />
+      <mesh
+        castShadow
+        receiveShadow
+        geometry={nodes.Curve017_11.geometry}
+        material={materials['Material.022']}
+      />
+      <mesh
+        castShadow
+        receiveShadow
+        geometry={nodes.Curve017_12.geometry}
+        material={materials['Material.018']}
+      />
+      <mesh
+        castShadow
+        receiveShadow
+        geometry={nodes.Curve017_13.geometry}
+        material={materials['Material.019']}
+      />
+      <mesh
+        castShadow
+        receiveShadow
+        geometry={nodes.Curve017_14.geometry}
+        material={materials['Material.020']}
+      />
+      <mesh
+        castShadow
+        receiveShadow
+        geometry={nodes.Curve017_15.geometry}
+        material={materials['Material.021']}
+      />
+      <mesh
+        castShadow
+        receiveShadow
+        geometry={nodes.Curve017_16.geometry}
+        material={materials['Material.012']}
+      />
+      <mesh
+        castShadow
+        receiveShadow
+        geometry={nodes.Curve017_17.geometry}
+        material={materials['Material.013']}
+      />
+      <mesh
+        castShadow
+        receiveShadow
+        geometry={nodes.Curve017_18.geometry}
+        material={materials['Material.014']}
+      />
+    </group>
+  )
+}
+
+useGLTF.preload('/display.glb')
+
