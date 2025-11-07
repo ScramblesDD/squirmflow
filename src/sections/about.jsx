@@ -5,6 +5,7 @@ import {ContactShadows, Environment, OrbitControls, PerspectiveCamera} from "@re
 import {useMediaQuery} from "react-responsive";
 import {calculateSizes} from "../constants/index.js";
 import React, {useState} from "react";
+import {createPortal} from "react-dom";
 
 const About = () => {
 
@@ -32,22 +33,21 @@ const About = () => {
                     />
 
                 </Canvas>
-
-                {activeModal === 'tri' && (
-                    <Modal
-                        title="Three.js"
-                        description="This modal belongs to the blue cube."
-                        onClose={() => setActiveModal(null)}
-                    />
-                )}
             </div>
+            {activeModal === 'tri' && (
+                <Modal
+                    title="Three.js"
+                    description="This modal belongs to the blue cube."
+                    onClose={() => setActiveModal(null)}
+                />
+            )}
         </section>
     );
 };
 
 {
     function Modal({title, description, onClose}) {
-        return (
+        return createPortal(
             <div
                 className="modal-overlay"
                 style={{
@@ -81,7 +81,8 @@ const About = () => {
                     <p>{description}</p>
                     <button onClick={onClose}>Close</button>
                 </div>
-            </div>
+            </div>,
+            document.getElementById("modal-root")
         );
     }
 }
