@@ -351,5 +351,12 @@ body {
             rounded-[76px] bg-squirmyellow outline outline-[12px] outline-offset-[-12px] outline-squirmgreen;
         }
     }
+
+    .modal-overlay {
+        pointer-events: auto;
+    }
+    canvas {
+        pointer-events: none;
+    }
     
 }
