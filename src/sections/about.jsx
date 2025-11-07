@@ -8,28 +8,6 @@ import React, {useState} from "react";
 
 const About = () => {
 
-    {/*
-        const controls = useControls({
-            camPosX: {
-                value: 0,
-                min: -10,
-                max: 10,
-            },
-
-            camPosY: {
-                value: -10.5,
-                min: -20,
-                max: 20,
-            },
-
-            camPosZ: {
-                value: 0,
-                min: -10,
-                max: 10,
-            },
-        })
-    */}
-
     const isSmall = useMediaQuery({minWidth: 375, maxWidth: 767})
     const isMobile = useMediaQuery({minWidth: 768, maxWidth: 895})
     const isTablet = useMediaQuery({minWidth: 897, maxWidth: 1024})
@@ -55,9 +33,9 @@ const About = () => {
 
                 </Canvas>
 
-                {activeModal === "tri" && (
+                {activeModal === 'tri' && (
                     <Modal
-                        title="Cube Modal"
+                        title="Three.js"
                         description="This modal belongs to the blue cube."
                         onClose={() => setActiveModal(null)}
                     />

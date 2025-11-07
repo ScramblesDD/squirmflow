@@ -352,11 +352,5 @@ body {
         }
     }
 
-    .modal-overlay {
-        pointer-events: auto;
-    }
-    canvas {
-        pointer-events: none;
-    }
     
 }

@@ -25,8 +25,7 @@ export function Display ({setActiveModal, ...props}) {
             onPointerMove={handlePointerMove}
             onPointerLeave={() => setHoveredPart(null)} >
             <mesh name="three"
-                geometry={nodes.three.geometry}
-                  onClick={() => setActiveModal("tri")}
+                geometry={nodes.three.geometry} onClick={() => setActiveModal("tri")}
             >
                 <meshStandardMaterial color={hoveredPart === 'three' ? 'black' : 'white'} roughness={0.33} metalness={1}
                                       envMapIntensity={2} />
