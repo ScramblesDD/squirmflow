@@ -1,7 +1,7 @@
 
 import { Canvas } from '@react-three/fiber'
 import { Display } from '../components/display.jsx'
-import {ContactShadows, Environment, OrbitControls, PerspectiveCamera} from "@react-three/drei";
+import {Environment, OrbitControls} from "@react-three/drei";
 import {useMediaQuery} from "react-responsive";
 import {calculateSizes} from "../constants/index.js";
 import React, {useState} from "react";
@@ -33,53 +33,100 @@ const About = () => {
 
                 </Canvas>
 
-                {activeModal === 'tri' && (
+                {activeModal === 'three' && (
                     <Modal
                         title="Three.js"
-                        description="This modal belongs to the blue cube."
+                        experience="Experience: 1 year"
+                        description="Three.js is a JavaScript library for rendering and animating 3D graphics in
+                        the browser. I began using it in order to create immersive web-based experiences that allow me
+                        to use 3D models."
+                        image="./assets/three.png"
                         onClose={() => setActiveModal(null)}
                     />
                 )}
+                {activeModal === 'rive' && (
+                    <Modal
+                        title="Rive"
+                        experience="Experience: 1 year"
+                        description="Rive is a vector animation editor that allows me to create and animate interactive
+                        2D vector graphics."
+                        image="./assets/rive.png"
+                        onClose={() => setActiveModal(null)}
+                    />
+                )}
+                {activeModal === 'blender' && (
+                    <Modal
+                        title="Blender"
+                        experience="Experience: 4 years"
+                        description="Blender is a software for creating 3D models, animations, and visual effects. I
+                        began learning it because I wanted to create and render my own 3D models."
+                        image="./assets/blender.png"
+                        onClose={() => setActiveModal(null)}
+                    />
+                )}
+                {activeModal === 'react' && (
+                    <Modal
+                        title="React"
+                        experience="Experience: 1 year"
+                        description="React is a JavaScript library for building user interfaces. I began learning it
+                        because I wanted to create interactive web-based experiences beyond what is possible with just
+                        vanilla Three.js."
+                        image="./assets/react.png"
+                        onClose={() => setActiveModal(null)}
+                    />
+                )}
+                {activeModal === 'ps' && (
+                    <Modal
+                        title="Photoshop"
+                        experience="Experience: 10+ years"
+                        description="Photoshop is a software for editing and manipulating images. I have been using it
+                        to create and edit my own art and images since I was a child in photography summer camp."
+                        image="./assets/ps.png"
+                        onClose={() => setActiveModal(null)}
+                    />
+                )}
+                {activeModal === 'ai' && (
+                    <Modal
+                        title="Illustrator"
+                        description="Illustrator is a software for creating and editing vector graphics. I use vector
+                        graphics when I need artwork that can look clean and crisp at different sizes without
+                        sacrificing quality."
+                        image="./assets/ai.png"
+                        onClose={() => setActiveModal(null)}
+                    />
+                )}
+                {activeModal === 'figma' && (
+                    <Modal
+                        title="Figma"
+                        experience="Experience: 1 year"
+                        description="Figma is a software that is used for creating website wireframes and prototypes."
+                        image="./assets/figma.png"
+                        onClose={() => setActiveModal(null)}
+                    />
+                )}
+
             </div>
         </section>
     );
 };
 
 
-    function Modal({title, description, onClose}) {
+    function Modal({title, experience, description, image, onClose}) {
         return (
             <div
-                className="modal-overlay"
-                style={{
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                    width: "100%",
-                    height: "100%",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    background: "rgba(0, 0, 0, 0.6)",
-                    zIndex: 10,
-                }}
-                onClick={onClose} // close when clicking outside
+                className="modal-overlay" onClick={onClose} // close when clicking outside
             >
-                <div
-                    className="modal-content"
-                    style={{
-                        background: "white",
-                        borderRadius: "16px",
-                        padding: "24px 36px",
-                        boxShadow: "0 10px 40px rgba(0,0,0,0.3)",
-                        cursor: "auto",
-                        maxWidth: "400px",
-                        textAlign: "center",
-                    }}
+                <div className="modal-content" style={{boxShadow: "0 10px 40px rgba(0,0,0,0.3)"}}
                     onClick={(e) => e.stopPropagation()} // prevent closing when clicking inside
                 >
-                    <h2>{title}</h2>
-                    <p>{description}</p>
                     <button onClick={onClose}>Close</button>
+                    <h2 className={"font-universbold_condensed text-4xl"}>{title}</h2>
+                    <div className="modal-line" />
+                    <p>{experience}</p>
+                    <div className="modal-line" />
+                    <p>{description}</p>
+                    <div className="modal-line" />
+                    <img src={image} alt={title} />
                 </div>
             </div>
         );

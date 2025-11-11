@@ -352,5 +352,21 @@ body {
         }
     }
 
+    .modal-overlay {
+        @apply absolute top-0 left-0 w-full h-full flex items-center justify-center z-10;
+    }
+
+    .modal-content {
+        @apply flex flex-col bg-white rounded-[16px] p-6 gap-3 cursor-auto max-w-[400px] text-left indent-1
+        overflow-hidden;
+    }
+
+    .modal-line {
+        @apply w-full border-b-[1px] border-black;
+    }
+
+    .modal-image {
+        @apply w-full h-[200px] object-cover;
+    }
     
 }
