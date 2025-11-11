@@ -347,13 +347,14 @@ body {
 
     @media screen and (max-width: 767px) and (min-width: 375px) {
         div.aboutBg {
-            @apply flex flex-col justify-center items-center self-stretch overflow-hidden w-full gap-3 pt-[76px] px-[12px]
-            rounded-[76px] bg-squirmyellow outline outline-[12px] outline-offset-[-12px] outline-squirmgreen;
+            @apply flex flex-col justify-center items-center self-stretch overflow-hidden w-full gap-3 pt-[76px]
+            px-[12px] rounded-[76px] bg-squirmyellow outline outline-[12px] outline-offset-[-12px]
+            outline-squirmgreen;
         }
     }
 
     .modal-overlay {
-        @apply absolute top-0 left-0 w-full h-full flex items-center justify-center z-10;
+        @apply fixed top-0 left-0 w-full h-[100vh] flex items-center justify-center z-[9999] overflow-hidden;
     }
 
     .modal-content {
